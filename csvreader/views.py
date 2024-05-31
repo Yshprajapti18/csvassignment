@@ -7,8 +7,8 @@ def upload(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
-            doc = form.save()
-            summaryfile = file(doc)
+            uploaded_file = request.FILES['csv']
+            summaryfile = file(uploaded_file)
             return render(request, 'summary.html', {
               'data' : summaryfile
             })
@@ -17,12 +17,12 @@ def upload(request):
     return render(request, 'upload.html', {"form": form})
 
 def file(doc):
-    if(doc.csv.url.endswith('.csv')):
-        df = pd.read_csv(doc.csv)
+    if(doc.name.endswith('.csv')):
+        df = pd.read_csv(doc)
         summarydata = summary(df)
         return summarydata.to_dict(orient='records')
     else:
-        df = pd.read_excel(doc.csv)
+        df = pd.read_excel(doc)
         summarydata = summary(df)
         return summarydata.to_dict(orient='records')
     
