@@ -7,6 +7,100 @@
     <title>Display Summarized Data</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: card-animation 1s ease-in-out;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            animation: header-animation 1s ease-in-out;
+        }
+
+        .card-body {
+            animation: body-animation 1s ease-in-out;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f8f9fa;
+        }
+
+        .table-bordered {
+            border-color: #dee2e6;
+        }
+
+        .table thead th {
+            border-bottom-width: 2px;
+            font-weight: 700;
+            color: #495057;
+        }
+
+        .alert-warning {
+            background-color: #ffc107;
+            color: #333;
+            animation: alert-animation 1s ease-in-out;
+        }
+
+        @keyframes card-animation {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes header-animation {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes body-animation {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes alert-animation {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -49,7 +143,6 @@
             </div>
         </div>
     </div>
-
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
