@@ -1,106 +1,27 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
+# Assignment: Sheet Summarizer for CSV and XLSX Files
 
-# Django + Vercel
+## Overview
+For this assignment at Company Selenium, the task was to create a web application capable of summarizing CSV or XLSX files uploaded by users. The summary should provide counts of occurrences where specific columns match. The approach involved utilizing Django as the web framework, along with Pandas for data manipulation. The application was deployed on Vercel.
 
-This example shows how to use Django 4 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
+## Approach
+1. **Model Creation**: A model was defined to represent uploaded files, containing fields for the file name and the file itself.
+   
+2. **Form Implementation**: A form was created in Django, utilizing the previously defined model. This form was used to handle file uploads.
 
-## Demo
+3. **CSV Reader Functionality**: A CSV reader function was developed within the Django app. It utilized the form to accept file uploads. Upon receiving a file, the function checked if it had a CSV or XLSX extension. If so, it proceeded to read the file using the Pandas library.
 
-https://django-template.vercel.app/
+4. **Data Summarization**: Once the file was successfully read, Pandas was used to summarize the data. Specifically, the counts of occurrences where certain columns (e.g., 'cust', 'state', 'dpd') matched were computed.
 
-## How it Works
+5. **Conversion to Dictionary**: The summarized data was converted into a dictionary format for easy rendering on the webpage.
 
-Our Django application, `example` is configured as an installed application in `api/settings.py`:
+6. **Rendering on Webpage**: Finally, the summarized data in dictionary form was rendered on the webpage for user viewing.
 
-```python
-# api/settings.py
-INSTALLED_APPS = [
-    # ...
-    'example',
-]
-```
+## Deployment Challenge
+One significant challenge encountered during deployment on Vercel was the platform's read-only filesystem. This limitation meant that the traditional approach of saving uploaded files to disk and then processing them was not feasible. Instead, the code had to be adapted to perform all operations without saving any files locally.
 
-We allow "\*.vercel.app" subdomains in `ALLOWED_HOSTS`, in addition to 127.0.0.1:
+## Solution
+To overcome the Vercel filesystem limitation, the code was modified to read and process the uploaded file directly in memory without saving it to disk. This required adjustments to the CSV reader function and the summarization process. Despite the challenge, the modified code successfully achieved the desired functionality of summarizing uploaded files without relying on local storage.
 
-```python
-# api/settings.py
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
-```
+## Conclusion
+In conclusion, the assignment required the development of a web application capable of summarizing CSV and XLSX files uploaded by users. By leveraging Django, Pandas, and adapting to the limitations of the Vercel platform, the task was successfully completed. The final application provides users with a convenient tool for quickly obtaining summaries of their data files.
 
-The `wsgi` module must use a public variable named `app` to expose the WSGI application:
-
-```python
-# api/wsgi.py
-app = get_wsgi_application()
-```
-
-The corresponding `WSGI_APPLICATION` setting is configured to use the `app` variable from the `api.wsgi` module:
-
-```python
-# api/settings.py
-WSGI_APPLICATION = 'api.wsgi.app'
-```
-
-There is a single view which renders the current time in `example/views.py`:
-
-```python
-# example/views.py
-from datetime import datetime
-
-from django.http import HttpResponse
-
-
-def index(request):
-    now = datetime.now()
-    html = f'''
-    <html>
-        <body>
-            <h1>Hello from Vercel!</h1>
-            <p>The current time is { now }.</p>
-        </body>
-    </html>
-    '''
-    return HttpResponse(html)
-```
-
-This view is exposed a URL through `example/urls.py`:
-
-```python
-# example/urls.py
-from django.urls import path
-
-from example.views import index
-
-
-urlpatterns = [
-    path('', index),
-]
-```
-
-Finally, it's made accessible to the Django server inside `api/urls.py`:
-
-```python
-# api/urls.py
-from django.urls import path, include
-
-urlpatterns = [
-    ...
-    path('', include('example.urls')),
-]
-```
-
-This example uses the Web Server Gateway Interface (WSGI) with Django to enable handling requests on Vercel with Serverless Functions.
-
-## Running Locally
-
-```bash
-python manage.py runserver
-```
-
-Your Django application is now available at `http://localhost:8000`.
-
-## One-Click Deploy
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
